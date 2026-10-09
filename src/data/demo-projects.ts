@@ -148,6 +148,22 @@ export const demoProjects: Project[] = [
     openReports: 1,
     timeline: [{ date: "Sep 2026", title: "Approved", note: "Budget approved; work scheduled for Jan 2027." }],
   },
+  {
+    id: "ring-road-sewer",
+    name: "Ring Road sewer line extension",
+    type: "Pipeline",
+    street: "Ring Road",
+    ward: "Ward 15",
+    location: "Ward 15, East",
+    department: "Water Supply Board",
+    status: "Planned",
+    progress: 0,
+    startDate: "Feb 2027",
+    estCompletion: "Aug 2027",
+    summary: "Extending the underground sewer line along Ring Road to connect new housing colonies.",
+    openReports: 0,
+    timeline: [{ date: "Sep 2026", title: "Tender issued", note: "Contractor selection under way." }],
+  },
 ];
 
 export const getProject = (id: string) => demoProjects.find((p) => p.id === id);
@@ -160,14 +176,41 @@ export function matchesQuery(p: Project, q: string) {
 
 export interface Conflict {
   id: string;
-  a: string;
-  b: string;
+  projectA: string;
+  projectB: string;
   area: string;
   overlap: string;
-  note: string;
+  why: string;
+  suggestion: string;
 }
 
+// Potential conflicts are flags for verification, not proof of wrongdoing.
 export const demoConflicts: Conflict[] = [
-  { id: "c1", a: "Station Road water main", b: "Station Road footpath relaying", area: "Ward 4, Old Town", overlap: "Jan – Mar 2027", note: "Footpath may be relaid before pipeline trenching finishes, risking a second dig." },
-  { id: "c2", a: "Lakeview storm-drain upgrade", b: "MG Road resurfacing, Phase 2", area: "Lakeview / Central border", overlap: "Nov – Dec 2026", note: "New asphalt at the MG Road end may be cut for drain outfall work." },
+  {
+    id: "c1",
+    projectA: "station-road-water-main",
+    projectB: "station-road-footpath",
+    area: "Station Road, Ward 4, Old Town",
+    overlap: "Jan – Mar 2027",
+    why: "Both projects work on the same stretch of Station Road. If the new footpath is laid before the water pipe trench is closed, the footpath may need to be broken up again.",
+    suggestion: "The two departments could agree to finish the pipeline section first, then relay the footpath.",
+  },
+  {
+    id: "c2",
+    projectA: "lakeview-storm-drain",
+    projectB: "mg-road-resurfacing",
+    area: "Lakeview / Central border, near MG Road",
+    overlap: "Nov – Dec 2026",
+    why: "The storm drain needs an outlet under the southern end of MG Road, which is being resurfaced at the same time. Fresh asphalt may be cut soon after it is laid.",
+    suggestion: "Resurfacing of the last 200 m could wait until the drain outlet is built.",
+  },
+  {
+    id: "c3",
+    projectA: "ring-road-junction",
+    projectB: "ring-road-sewer",
+    area: "Ring Road, Ward 15, East",
+    overlap: "Feb – Jun 2027",
+    why: "The widened junction is due to be finished while the sewer line is being dug along the same road. Digging across the new junction could undo recent work.",
+    suggestion: "Laying the sewer pipe under the junction before final paving could avoid a second dig.",
+  },
 ];

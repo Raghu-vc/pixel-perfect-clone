@@ -14,7 +14,6 @@ import { Route as AccountRouteImport } from './routes/account'
 import { Route as ConflictsRouteImport } from './routes/conflicts'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as InsightsRouteImport } from './routes/insights'
-import { Route as ReportsRouteImport } from './routes/reports'
 import { Route as ProjectsProjectIdRouteImport } from './routes/projects.$projectId'
 
 const IndexRoute = IndexRouteImport.update({
@@ -42,11 +41,6 @@ const InsightsRoute = InsightsRouteImport.update({
   path: '/insights',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ReportsRoute = ReportsRouteImport.update({
-  id: '/reports',
-  path: '/reports',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
   id: '/projects/$projectId',
   path: '/projects/$projectId',
@@ -59,7 +53,6 @@ export interface FileRoutesByFullPath {
   '/conflicts': typeof ConflictsRoute
   '/explore': typeof ExploreRoute
   '/insights': typeof InsightsRoute
-  '/reports': typeof ReportsRoute
   '/projects/$projectId': typeof ProjectsProjectIdRoute
 }
 export interface FileRoutesByTo {
@@ -68,7 +61,6 @@ export interface FileRoutesByTo {
   '/conflicts': typeof ConflictsRoute
   '/explore': typeof ExploreRoute
   '/insights': typeof InsightsRoute
-  '/reports': typeof ReportsRoute
   '/projects/$projectId': typeof ProjectsProjectIdRoute
 }
 export interface FileRoutesById {
@@ -78,7 +70,6 @@ export interface FileRoutesById {
   '/conflicts': typeof ConflictsRoute
   '/explore': typeof ExploreRoute
   '/insights': typeof InsightsRoute
-  '/reports': typeof ReportsRoute
   '/projects/$projectId': typeof ProjectsProjectIdRoute
 }
 export interface FileRouteTypes {
@@ -89,7 +80,6 @@ export interface FileRouteTypes {
     | '/conflicts'
     | '/explore'
     | '/insights'
-    | '/reports'
     | '/projects/$projectId'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -98,7 +88,6 @@ export interface FileRouteTypes {
     | '/conflicts'
     | '/explore'
     | '/insights'
-    | '/reports'
     | '/projects/$projectId'
   id:
     | '__root__'
@@ -107,7 +96,6 @@ export interface FileRouteTypes {
     | '/conflicts'
     | '/explore'
     | '/insights'
-    | '/reports'
     | '/projects/$projectId'
   fileRoutesById: FileRoutesById
 }
@@ -117,7 +105,6 @@ export interface RootRouteChildren {
   ConflictsRoute: typeof ConflictsRoute
   ExploreRoute: typeof ExploreRoute
   InsightsRoute: typeof InsightsRoute
-  ReportsRoute: typeof ReportsRoute
   ProjectsProjectIdRoute: typeof ProjectsProjectIdRoute
 }
 
@@ -158,13 +145,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InsightsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/reports': {
-      id: '/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof ReportsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/projects/$projectId': {
       id: '/projects/$projectId'
       path: '/projects/$projectId'
@@ -181,7 +161,6 @@ const rootRouteChildren: RootRouteChildren = {
   ConflictsRoute: ConflictsRoute,
   ExploreRoute: ExploreRoute,
   InsightsRoute: InsightsRoute,
-  ReportsRoute: ReportsRoute,
   ProjectsProjectIdRoute: ProjectsProjectIdRoute,
 }
 export const routeTree = rootRouteImport
