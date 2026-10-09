@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { MapPin, Building2, CalendarClock, ArrowLeft, Hammer } from "lucide-react";
-import type { Project, ProjectStatus } from "@/data/demo-projects";
+import { MapPin, Building2, CalendarClock, ArrowLeft, Hammer, GitMerge } from "lucide-react";
+import { demoConflicts, type Project, type ProjectStatus } from "@/data/demo-projects";
 import { cn } from "@/lib/utils";
 
 export const statusStyle: Record<ProjectStatus, string> = {
@@ -110,5 +110,24 @@ export function ComingSoon({ eyebrow, title, sub }: { eyebrow: string; title: st
         </div>
       </div>
     </>
+  );
+}
+
+export function ConflictGrid() {
+  return (
+    <div className="grid gap-5 md:grid-cols-2">
+      {demoConflicts.map((c) => (
+        <article key={c.id} className="rounded-xl border border-warning/40 bg-card p-5 transition-colors hover:border-warning">
+          <div className="flex items-center gap-2 text-sm font-semibold text-warning">
+            <GitMerge className="h-4 w-4" aria-hidden /> Overlap {c.overlap}
+          </div>
+          <p className="mt-3 font-semibold">{c.a}</p>
+          <p className="text-sm text-muted-foreground">and</p>
+          <p className="font-semibold">{c.b}</p>
+          <p className="mt-3 text-sm text-muted-foreground">{c.note}</p>
+          <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground"><MapPin className="h-3.5 w-3.5" aria-hidden />{c.area}</p>
+        </article>
+      ))}
+    </div>
   );
 }

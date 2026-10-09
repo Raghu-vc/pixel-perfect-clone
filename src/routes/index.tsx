@@ -1,9 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Search, AlertTriangle, MapPin, GitMerge, Megaphone, ArrowRight } from "lucide-react";
+import { Search, AlertTriangle, Megaphone, ArrowRight } from "lucide-react";
 import { AppShell } from "@/components/AppShell";
-import { ProjectCard, SectionHead } from "@/components/ui-blocks";
-import { demoProjects, demoConflicts, matchesQuery } from "@/data/demo-projects";
+import { ProjectCard, SectionHead, ConflictGrid } from "@/components/ui-blocks";
+import { demoProjects, matchesQuery } from "@/data/demo-projects";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -112,21 +112,3 @@ function Index() {
   );
 }
 
-export function ConflictGrid() {
-  return (
-    <div className="grid gap-5 md:grid-cols-2">
-      {demoConflicts.map((c) => (
-        <article key={c.id} className="rounded-xl border border-warning/40 bg-card p-5 transition-colors hover:border-warning">
-          <div className="flex items-center gap-2 text-sm font-semibold text-warning">
-            <GitMerge className="h-4 w-4" aria-hidden /> Overlap {c.overlap}
-          </div>
-          <p className="mt-3 font-semibold">{c.a}</p>
-          <p className="text-sm text-muted-foreground">and</p>
-          <p className="font-semibold">{c.b}</p>
-          <p className="mt-3 text-sm text-muted-foreground">{c.note}</p>
-          <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground"><MapPin className="h-3.5 w-3.5" aria-hidden />{c.area}</p>
-        </article>
-      ))}
-    </div>
-  );
-}
