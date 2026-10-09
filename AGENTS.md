@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Themes are CSS classes (`.dark`, `.radiant`) on `<html>`, set by `src/lib/theme.tsx` and an inline head script — avoids a flash of the wrong theme.
+- Sample content lives in `src/data/` and must be labelled as demo data in the UI — it is not official data.
