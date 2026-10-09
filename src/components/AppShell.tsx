@@ -5,13 +5,13 @@ import { useTheme, type Theme } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 
 const nav = [
-  { label: "Home", icon: Home, active: true },
-  { label: "Explore Projects", icon: Compass },
-  { label: "Reports", icon: FileWarning },
-  { label: "Potential Conflicts", icon: GitMerge },
-  { label: "Community Insights", icon: Users },
-  { label: "Account", icon: UserCircle },
-];
+  { label: "Home", icon: Home, to: "/" },
+  { label: "Explore Projects", icon: Compass, to: "/explore" },
+  { label: "Reports", icon: FileWarning, to: "/reports" },
+  { label: "Potential Conflicts", icon: GitMerge, to: "/conflicts" },
+  { label: "Community Insights", icon: Users, to: "/insights" },
+  { label: "Account", icon: UserCircle, to: "/account" },
+] as const;
 
 const themeOpts: { id: Theme; label: string; icon: typeof Sun }[] = [
   { id: "light", label: "Light", icon: Sun },
@@ -42,26 +42,25 @@ function ThemeSelector() {
   );
 }
 
+const linkBase = "flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors";
+
 function SidebarBody({ onNav }: { onNav?: () => void }) {
   return (
     <div className="flex h-full flex-col gap-8 p-5">
-      <Link to="/" onClick={onNav} className="flex items-baseline gap-2">
-        <span className="font-display text-2xl font-semibold">WorksWatch</span>
-      </Link>
+      <Link to="/" onClick={onNav} className="font-display text-2xl font-semibold">WorksWatch</Link>
       <nav aria-label="Main" className="flex flex-col gap-1">
         {nav.map((n) => (
-          <button
-            key={n.label}
+          <Link
+            key={n.to}
+            to={n.to}
             onClick={onNav}
-            aria-current={n.active ? "page" : undefined}
-            className={cn(
-              "flex items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors",
-              n.active ? "bg-sidebar-accent text-sidebar-foreground" : "text-sidebar-foreground/75 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground",
-            )}
+            activeOptions={{ exact: n.to === "/" }}
+            activeProps={{ className: cn(linkBase, "bg-sidebar-accent text-sidebar-foreground"), "aria-current": "page" }}
+            inactiveProps={{ className: cn(linkBase, "text-sidebar-foreground/75 hover:bg-sidebar-accent/60 hover:text-sidebar-foreground") }}
           >
             <n.icon className="h-4 w-4" aria-hidden />
             {n.label}
-          </button>
+          </Link>
         ))}
       </nav>
       <div className="mt-auto space-y-3">
@@ -95,7 +94,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="flex items-center justify-between border-b px-5 py-3 lg:hidden">
-          <span className="font-display text-xl font-semibold">WorksWatch</span>
+          <Link to="/" className="font-display text-xl font-semibold">WorksWatch</Link>
           <button aria-label="Open menu" onClick={() => setOpen(true)} className="rounded-md p-2 hover:bg-muted">
             <Menu className="h-5 w-5" />
           </button>
